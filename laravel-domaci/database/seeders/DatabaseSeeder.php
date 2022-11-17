@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Genre;
+use App\Models\Book;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +17,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Genre::truncate();
+        User::truncate();
+        Book::truncate();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+
+        Book::factory(5)->create();
+
+        $user = User::factory()->create();
+        $genre1 = Genre::factory()->create();
+        $genre2 = Genre::factory()->create();
+
+        Book::factory(5)->create([
+            'user_id'=>$user->id,
+            'genre_id'=>$genre1->id,
+        ]);
+        Book::factory(2)->create([
+            'user_id'=>$user->id,
+            'genre_id'=>$genre2->id,
+        ]);
+
+
+        }
     }
-}
